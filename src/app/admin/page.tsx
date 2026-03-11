@@ -5,6 +5,7 @@ import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer,
     PieChart, Pie, Cell, LineChart, Line, ReferenceArea
 } from 'recharts';
+import { signOut, useSession } from "next-auth/react";
 
 // SVG Icons to match screenshot
 const ArrowUp = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 inline-block mr-1"><path d="m18 15-6-6-6 6" /></svg>;
@@ -41,6 +42,7 @@ export default function AdminPage() {
     const [stats, setStats] = useState<any[]>([]);
     const [trends, setTrends] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const { data: session } = useSession();
 
     useEffect(() => {
         async function fetchData() {
@@ -161,6 +163,19 @@ export default function AdminPage() {
 
             {/* Dashboard View Matching Screenshot */}
             <div className="p-6 md:p-10 max-w-[1400px] mx-auto">
+                <div className="flex justify-between items-center mb-8">
+                    <div>
+                        <h1 className="text-3xl font-bold text-slate-800">Administrator Dashboard</h1>
+                        <p className="text-slate-500 text-sm">Welcome back, {session?.user?.email || 'Admin'}</p>
+                    </div>
+                    <button
+                        onClick={() => signOut({ callbackUrl: '/admin/login' })}
+                        className="bg-white border border-slate-200 hover:border-red-200 hover:bg-red-50 text-slate-600 hover:text-red-600 px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 shadow-sm"
+                    >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
+                        SIGN OUT
+                    </button>
+                </div>
 
 
                 <div className="w-full flex flex-col gap-4">

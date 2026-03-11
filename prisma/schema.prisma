@@ -53,6 +53,12 @@ model TrendPoint {
 model Donation {
   id        Int      @id @default(autoincrement())
   amount    Float
-  name      String   @default("A generous donor")
+  name      String
   createdAt DateTime @default(now())
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
 }

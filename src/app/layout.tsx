@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 };
 
 import NotificationProvider from '@/components/NotificationProvider';
+import AuthProvider from '@/components/AuthProvider';
 
 export default function RootLayout({
   children,
@@ -29,9 +30,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cinzel.variable} ${inter.variable}`}>
       <body>
-        <NotificationProvider>
-          {children}
-        </NotificationProvider>
+        <AuthProvider>
+          <NotificationProvider>
+            {children}
+          </NotificationProvider>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -97,6 +97,21 @@ async function main() {
     })
 
     console.log('Created stats.')
+
+    // Create Admin User
+    const bcrypt = require('bcryptjs')
+    const hashedPassword = await bcrypt.hash('admin123', 10)
+
+    await prisma.user.upsert({
+        where: { email: 'admin@ark.com' },
+        update: {},
+        create: {
+            email: 'admin@ark.com',
+            password: hashedPassword
+        }
+    })
+
+    console.log('Created admin user: admin@ark.com / admin123')
 }
 
 main()
