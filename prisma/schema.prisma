@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model SiteSettings {
+  id           Int      @id @default(autoincrement())
+  raised       Float    @default(0)
+  goal         Float    @default(100000000)
+  heroTitle    String   @default("BUILD THE ARK")
+  heroSubtitle String   @default("A STORY OF FAITH IN KENTUCKY")
+  heroText     String   @default("Every great journey begins with a single plank. Once gifted for the Ark, see the work, and please be ready—one donation at a time.")
+  updatedAt    DateTime @updatedAt
+}
+
+model DonationTier {
+  id          Int      @id @default(autoincrement())
+  icon        String
+  name        String
+  price       Float
+  available   Int
+  description String
+  features    String
+  isPopular   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Stat {
+  id        Int      @id @default(autoincrement())
+  value     String
+  label     String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TrendPoint {
+  id        Int      @id @default(autoincrement())
+  type      String   // "HISTORY" or "FORECAST"
+  label     String   // e.g. "28 June"
+  value1    Float    // "Generated" or "Current"
+  value2    Float?   // "Target" or "Previous"
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Donation {
+  id        Int      @id @default(autoincrement())
+  amount    Float
+  name      String   @default("A generous donor")
+  createdAt DateTime @default(now())
+}

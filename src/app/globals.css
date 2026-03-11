@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-navy: #08111b;
+  --color-navy-light: #121c27;
+  --color-navy-border: #1f2b3b;
+  --color-gold: #dfb25d;
+  --color-gold-dark: #8c6e3b;
+  --color-text-main: #fcfcfc;
+  --color-text-muted: #8d98a6;
+  --color-bg-base: #0d141e;
+
+  --font-heading: 'Cinzel', serif;
+  --font-body: 'Inter', sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    @apply bg-bg-base text-text-main font-body;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  .heading-font {
+    @apply font-heading uppercase;
+  }
+
+  /* Hide number input arrows globally */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3 font-heading font-semibold text-[0.95rem] tracking-wide uppercase no-underline rounded cursor-pointer transition-all duration-300 border-none;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #f5d185, #cba24d);
+    color: var(--color-navy);
+    box-shadow: 0 4px 15px rgba(203, 162, 77, 0.4);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(203, 162, 77, 0.6);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--color-gold);
+    border: 1px solid var(--color-gold-dark);
+  }
+
+  .btn-outline:hover {
+    background: rgba(223, 178, 93, 0.1);
+    border-color: var(--color-gold);
+  }
+}
+@keyframes oceanShine {
+  0%,
+  100% {
+    transform: scaleX(.8) translateX(-5%);
+    opacity: .4;
+  }
+  50% {
+    transform: scaleX(1.1) translateX(5%);
+    opacity: 1;
+  }
+}
+
+.ocean-bg {
+  background: linear-gradient(180deg, #163a5c 0%, #0a1e30 50%, #060e18 100%);
+  border-radius: 55% 55% 0 0/18% 18% 0 0;
+}
+
+.ocean-shine-anim {
+  background: linear-gradient(90deg, transparent, rgba(240, 192, 96, .5) 50%, transparent);
+  animation: oceanShine 4s ease-in-out infinite;
+}
+
+@keyframes pl {
+  0%,
+  100% {
+    opacity: .3;
+  }
+  50% {
+    opacity: 1;
+  }
 }
